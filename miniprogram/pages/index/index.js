@@ -45,7 +45,7 @@ Page({
         avatarUrl: e.detail.userInfo.avatarUrl,
         userInfo: e.detail.userInfo
       })
-      console.log('a',e)
+      console.log('a',e.detail.userInfo)
     }
    
   },
