@@ -1,4 +1,5 @@
 //app.js
+
 App({
   onLaunch: function() {
     this.globalData = {
@@ -11,6 +12,63 @@ App({
     } else {
       wx.cloud.init({
         traceUser: true
+      });
+    }
+    if (!wx.getStorageSync('name')) {
+      wx.cloud.callFunction({
+        name: 'login',
+        data: {},
+        success: res => {
+          console.log('[云函数] [login] user openid: ', res);
+          this.globalData.openid = res.result.openid;
+          if (!res.result.name) {
+            wx.getSetting({
+              success: seRes => {
+                if (seRes.authSetting['scope.userInfo']) {
+                  // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+                  wx.getUserInfo({
+                    success: infoRes => {
+                      console.log('object', infoRes);
+                      wx.cloud.callFunction({
+                        name: 'updateUser',
+                        data: {
+                          name: infoRes.userInfo.nickName,
+                          gender: infoRes.userInfo.gender,
+                          avatarUrl: infoRes.userInfo.avatarUrl
+                        },
+                        success: updateRes => {
+                          wx.setStorage({
+                            key: 'name',
+                            data: updateRes.result.name
+                          });
+                          wx.setStorage({
+                            key: 'avatarUrl',
+                            data: updateRes.result.avatarUrl
+                          });
+                        },
+                        fail: err => {
+                          console.error('[云函数] [login] 调用失败', err);
+                        }
+                      });
+                    }
+                  });
+                }
+              }
+            });
+          } else {
+            wx.setStorage({
+              key: 'name',
+              data: res.result.name
+            });
+            wx.setStorage({
+              key: 'avatarUrl',
+              data: res.result.avatarUrl
+            });
+          }
+        },
+        fail: err => {
+          console.error('[云函数] [login] 调用失败', err);
+        }
       });
     }
 

@@ -2,9 +2,9 @@
 <view class="container">
   <!-- 用户 openid -->
   <view class="userinfo">
-    <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})"></button>
+    <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{userInfo.avatarUrl}})"></button>
     <view>
-      <button class="userinfo-nickname">{{userInfo.nickName}}</button>
+      <button class="userinfo-nickname">{{userInfo.name}}</button>
     </view>
   </view>
   <!-- 上传图片 -->

@@ -1,4 +1,7 @@
 <!-- miniprogram/pages/forcecast/forcecast.wxml -->
+<cu-custom bgColor="bg-opacity" isBack="{{true}}">
+  <view slot="backText">返回</view>
+</cu-custom>
 <view class="fc-main">
   <view class="content">
     <view class="cur-box" wx:if="{{weatherData}}">
@@ -20,7 +23,7 @@
       </view>
     </view>
     <view class="bottom-box">
-      <button class="my-box btn-box">开始预报</button>
+      <button class="my-box btn-box" bindtap="begin">开始预报</button>
       <button class="history-box btn-box">预报历史</button>
     </view>
   </view>

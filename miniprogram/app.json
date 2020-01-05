@@ -1,10 +1,11 @@
 {
   "pages": [
+    "pages/home/home",
+    "pages/index/index",
     "pages/forcecast/forcecast",
     "pages/qa/qa",
-    "pages/home/home",
     "pages/game/game",
-    "pages/index/index"
+    "pages/beginForceCast/begin"
   ],
   "tabBar": {
     "color": "#7f8389",
