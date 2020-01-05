@@ -1,16 +1,16 @@
 {
   "pages": [
+    "pages/home/home",
     "pages/index/index",
     "pages/qa/qa",
-    "pages/forcecast/forcecast",
-    "pages/home/home"
+    "pages/forcecast/forcecast"
+
   ],
   "tabBar": {
     "color": "#7f8389",
     "selectedColor": "#00a8f3",
     "borderStyle": "black",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/home/home",
         "text": "首页"
       },
