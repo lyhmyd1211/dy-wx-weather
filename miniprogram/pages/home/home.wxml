@@ -1,4 +1,23 @@
 <!-- miniprogram/pages/home/home.wxml -->
-<view class="box">
-  <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}">
+  <!-- <view slot="backText">返回</view> -->
+  <view slot="content">导航栏</view>
+</cu-custom>
+<view class="home-main">
+  <view class="box">
+    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+  </view>
+  <view class="home-content" style="height: 55%">
+    <text class="rank-text">积分排名</text>
+    <scroll-view scroll-y="true" style="height: 100%">
+      <view class="list-item" wx:for="{{list}}" wx:key="index">
+        <view class="rank">{{index+1}}.</view>
+        <view class="user-item">
+          <image src="{{item.avatar}}" class="avatar-img" />
+          <text class="list-item-text">{{item.name}}</text>
+        </view>
+        <text class="score">{{item.score}}分</text>
+      </view>
+    </scroll-view>
+  </view>
 </view>

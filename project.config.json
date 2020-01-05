@@ -10,7 +10,7 @@
 	},
 	"appid": "wxc30369a1c8486b7e",
 	"projectname": "dy-weather",
-	"libVersion": "2.2.5",
+	"libVersion": "2.10.0",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {

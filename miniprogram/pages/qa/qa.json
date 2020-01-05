@@ -1,3 +1,8 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "Circle",
+  "usingComponents": {
+    "wux-button": "../../lib/button/index",
+    "wux-circle": "../../lib/circle/index",
+    "wux-landscape": "../../lib/landscape/index"
+  }
 }

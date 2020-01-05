@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/home/home",
-    "pages/index/index",
+    "pages/forcecast/forcecast",
     "pages/qa/qa",
-    "pages/forcecast/forcecast"
-
+    "pages/home/home",
+    "pages/game/game",
+    "pages/index/index"
   ],
   "tabBar": {
     "color": "#7f8389",
@@ -15,12 +15,8 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/qa/qa",
-        "text": "气象知识竞答"
-      },
-      {
-        "pagePath": "pages/forcecast/forcecast",
-        "text": "全民预报"
+        "pagePath": "pages/game/game",
+        "text": "全民游戏"
       },
       {
         "pagePath": "pages/index/index",
@@ -29,11 +25,20 @@
     ]
   },
   "window": {
+    "navigationStyle": "custom",
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "云开发 QuickStart",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  },
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于定位效果展示"
+    }
+  }
 }

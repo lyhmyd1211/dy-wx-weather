@@ -1,1 +1,73 @@
 /* miniprogram/pages/forcecast/forcecast.wxss */
+.fc-main {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(#8f0ab9, #9bcaf3);
+}
+
+.content {
+  margin-top: 60px;
+  color: #fff;
+}
+
+.cur-box {
+  min-height: 500rpx;
+  text-align: center;
+  margin: 70rpx 20rpx 50rpx 20rpx;
+  line-height: 100rpx;
+  border-bottom: 1px solid rgb(194, 193, 193);
+}
+
+.location1 {
+  font-size: 17pt;
+}
+
+.location2 {
+  font-size: 17pt;
+}
+
+.curT {
+  justify-content: center;
+  font-size: 50pt;
+  display: flex;
+  align-items: flex-start;
+}
+
+.date {
+  font-size: 15pt;
+}
+
+.danw {
+  font-size: 25pt;
+}
+
+.t {
+  font-size: 14pt;
+}
+
+.bottom-box {
+  margin-top: 100rpx;
+}
+
+.btn-box {
+  color: #fff;
+  font-size: 20pt;
+  height: 200rpx;
+  margin: 50rpx 50rpx;
+  line-height: 200rpx;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50rpx;
+  -webkit-border-radius: 50rpx;
+  -moz-border-radius: 50rpx;
+  -ms-border-radius: 50rpx;
+  -o-border-radius: 50rpx;
+}
+.pic {
+  width: 100rpx;
+  height: 100rpx;
+}

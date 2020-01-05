@@ -1,2 +1,30 @@
-<!--miniprogram/pages/qa/qa.wxml-->
-<text>miniprogram/pages/qa/qa.wxml</text>
+<!-- miniprogram/pages/qa/qa.wxml -->
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">导航栏</view>
+</cu-custom>
+<view class="qa-main">
+  <!-- <view class="time">{{time}}</view> -->
+  <view class="page__bd page__bd_spacing circle-box">
+    <wux-circle size="50" percent="{{percent}}" color="#33cd5f" sAngle="270" wx:if="{{!isnext}}">
+      {{time}}
+    </wux-circle>
+  </view>
+  <wux-landscape visible="{{ finish }}" closable="{{false}}">
+    <view class="finish-box">
+      <view>本次答题获取分数:{{score}}分</view>
+      <view>再接再厉，继续加油！</view>
+      <button bindtap="back">结束答题</button>
+    </view>
+  </wux-landscape>
+  <view style="height:1rpx"></view>
+  <view class="question-box">
+    <view style="height:1rpx"></view>
+    <scroll-view scroll-y="true" style="height:40%" class="text-q">{{curData.q}}</scroll-view>
+    <scroll-view scroll-y="true" style="height:45%" class="a-box">
+      <view class="{{'text-a '+(isChoose&&item.aId==curData.correct?'correct':isChoose&&curChoose!==curData.correct&&item.aId ==curChoose?'error':'')}}" wx:for="{{curData.a}}" data-id="{{item.aId}}" wx:key="index" bindtap="choose">
+        <view>{{aTitle[index%5]+item.atext}}</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

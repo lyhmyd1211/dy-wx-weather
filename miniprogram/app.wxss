@@ -1,7 +1,14 @@
 /**app.wxss**/
+@import "colorui/main.wxss";
+@import "colorui/icon.wxss";
+
+:root {
+  --opacity: rgba(0, 0, 0, 0)
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-} 
+}

@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "wux-navbar": "../../lib/navbar/index",
+    "wux-icon": "../../lib/icon/index"
+  }
 }

@@ -1,5 +1,5 @@
 import * as echarts from '../../ec-canvas/echarts';
-import   '../../ec-canvas/echarts-liquidfill.min'
+import '../../ec-canvas/echarts-liquidfill.min';
 let chart = null;
 
 // 2、进行初始化数据
@@ -11,10 +11,30 @@ function initChart(canvas, width, height) {
   canvas.setChart(chart);
 
   var option = {
-    series: [{
-      type: 'liquidFill',
-      data: [0.6]
-  }]
+    series: [
+      {
+        radius: '80%',
+        type: 'liquidFill',
+        data: [0.2],
+        outline: {
+          show: false
+        },
+        label: {
+          position: ['50%', '50%'],
+          formatter: function() {
+            return '60';
+          },
+          fontSize: 24,
+          color: '#D94854'
+        },
+        itemStyle: {
+          opacity: 0.6
+        },
+        emphasis: {
+          show: false
+        }
+      }
+    ]
   };
 
   chart.setOption(option);
@@ -31,6 +51,58 @@ Page({
     };
   },
   data: {
+    list: [
+      {
+        name: 'wuhen',
+        score: '300',
+        avatar: '../../images/user-unlogin.png'
+      },
+      {
+        name: 'moyi',
+        score: '200',
+        avatar: '../../images/user-unlogin.png'
+      },
+      {
+        name: 'wuhen',
+        score: '300',
+        avatar: '../../images/user-unlogin.png'
+      },
+      {
+        name: 'moyi',
+        score: '200',
+        avatar: '../../images/user-unlogin.png'
+      },
+      {
+        name: 'wuhen',
+        score: '300',
+        avatar: '../../images/user-unlogin.png'
+      },
+      {
+        name: 'moyi',
+        score: '200',
+        avatar: '../../images/user-unlogin.png'
+      },
+      {
+        name: 'wuhen',
+        score: '300',
+        avatar: '../../images/user-unlogin.png'
+      },
+      {
+        name: 'moyi',
+        score: '200',
+        avatar: '../../images/user-unlogin.png'
+      },
+      {
+        name: 'wuhen',
+        score: '300',
+        avatar: '../../images/user-unlogin.png'
+      },
+      {
+        name: 'moyi',
+        score: '200',
+        avatar: '../../images/user-unlogin.png'
+      }
+    ],
     ec: {
       onInit: initChart // 3、将数据放入到里面
     }

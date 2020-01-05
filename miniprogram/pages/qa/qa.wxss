@@ -1,1 +1,85 @@
 /* miniprogram/pages/qa/qa.wxss */
+.qa-main {
+  height: calc(100vh - 60px);
+  position: relative;
+}
+
+.circle-box {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 100rpx;
+  -webkit-border-radius: 100rpx;
+  -moz-border-radius: 100rpx;
+  -ms-border-radius: 100rpx;
+  -o-border-radius: 100rpx;
+  position: absolute;
+  margin-top: calc(20% - 50rpx);
+  left: calc(50% - 50rpx);
+  text-align: center;
+  line-height: 100rpx;
+}
+
+.wux-circle {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.question-box {
+  height: 80%;
+  width: 80%;
+  margin: auto;
+  margin-top: 20%;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.finish-box {
+  background-color: #fff;
+  padding: 50rpx;
+  border-radius: 20px;
+
+}
+
+.text-q {
+  font-size: 15pt;
+  color: #353535;
+  text-align: center;
+  margin: 100rpx 20rpx 10rpx 20rpx;
+  height: 40%;
+  width: 94%;
+}
+
+.a-box {
+  /* height: 3%;
+  width: 94%; */
+}
+
+.text-a {
+  font-size: 14pt;
+  color: #353535;
+  text-align: center;
+  margin: 50rpx auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  padding: 5px 15px;
+  width: 80%;
+  min-width: 200rpx;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.correct {
+  background-color: #09bb07;
+  color: #fff;
+}
+
+.error {
+  background-color: #e64340;
+  color: #fff;
+}
