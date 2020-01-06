@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/qa/qa",
     "pages/home/home",
     "pages/index/index",
     "pages/forcecast/forcecast",
-    "pages/qa/qa",
     "pages/game/game",
     "pages/beginForceCast/begin"
   ],

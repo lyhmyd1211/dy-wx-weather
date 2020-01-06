@@ -5,7 +5,7 @@ const userCollection = db.collection('user');
 
 exports.main = async event => {
   const { OPENID } = cloud.getWXContext();
-  const { name, gender, avatarUrl } = event;
+  const { name, score, avatarUrl } = event;
   console.log('event', event);
 
   try {
@@ -26,7 +26,7 @@ exports.main = async event => {
       await userCollection.doc(userRecord._id).update({
         data: {
           name,
-          gender,
+          score,
           avatarUrl
         }
       });
@@ -34,7 +34,7 @@ exports.main = async event => {
     return {
       openId: OPENID,
       name,
-      gender,
+      score,
       avatarUrl
     };
   } catch (e) {

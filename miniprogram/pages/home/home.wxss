@@ -17,8 +17,8 @@
 }
 
 .avatar-img {
-  width: 40rpx;
-  height: 40rpx;
+  width: 80rpx;
+  height: 80rpx;
   border: 1rpx solid #eee;
   border-radius: 40rpx;
   -webkit-border-radius: 40rpx;

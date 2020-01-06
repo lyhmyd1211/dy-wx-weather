@@ -14,6 +14,7 @@ exports.main = async () => {
     if (!userInfo) {
       await userCollection.add({
         data: {
+          _openid: OPENID,
           openId: OPENID,
           createdTime: db.serverDate()
         }

@@ -1,7 +1,7 @@
 import * as echarts from '../../ec-canvas/echarts';
 import '../../ec-canvas/echarts-liquidfill.min';
 let chart = null;
-
+const app = getApp();
 // 2、进行初始化数据
 function initChart(canvas, width, height) {
   chart = echarts.init(canvas, null, {
@@ -51,58 +51,8 @@ Page({
     };
   },
   data: {
-    list: [
-      {
-        name: 'wuhen',
-        score: '300',
-        avatar: '../../images/user-unlogin.png'
-      },
-      {
-        name: 'moyi',
-        score: '200',
-        avatar: '../../images/user-unlogin.png'
-      },
-      {
-        name: 'wuhen',
-        score: '300',
-        avatar: '../../images/user-unlogin.png'
-      },
-      {
-        name: 'moyi',
-        score: '200',
-        avatar: '../../images/user-unlogin.png'
-      },
-      {
-        name: 'wuhen',
-        score: '300',
-        avatar: '../../images/user-unlogin.png'
-      },
-      {
-        name: 'moyi',
-        score: '200',
-        avatar: '../../images/user-unlogin.png'
-      },
-      {
-        name: 'wuhen',
-        score: '300',
-        avatar: '../../images/user-unlogin.png'
-      },
-      {
-        name: 'moyi',
-        score: '200',
-        avatar: '../../images/user-unlogin.png'
-      },
-      {
-        name: 'wuhen',
-        score: '300',
-        avatar: '../../images/user-unlogin.png'
-      },
-      {
-        name: 'moyi',
-        score: '200',
-        avatar: '../../images/user-unlogin.png'
-      }
-    ],
+    defaultAva: '../../images/user-unlogin.png',
+    list: [],
     ec: {
       onInit: initChart // 3、将数据放入到里面
     }
@@ -121,10 +71,34 @@ Page({
       }
     });
   },
+
+  queryRank: function() {
+    const db = wx.cloud.database();
+    // 查询当前用户所有的 user
+    db.collection('user')
+      .orderBy('score', 'desc')
+      .get({
+        success: res => {
+          console.log('[数据库] [查询记录] 成功: ', res);
+          this.setData({
+            list: res.data
+          });
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '查询记录失败'
+          });
+          console.error('[数据库] [查询记录] 失败：', err);
+        }
+      });
+  },
+  onShow: function(options) {
+    this.queryRank();
+  },
   onReady() {
     setTimeout(function() {
       // 获取 chart 实例的方式
-      console.log(chart);
     }, 2000);
 
     // this.login();

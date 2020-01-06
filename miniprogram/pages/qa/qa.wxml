@@ -13,10 +13,17 @@
   <wux-landscape visible="{{ finish }}" closable="{{false}}">
     <view class="finish-box">
       <view>本次答题获取分数:{{score}}分</view>
-      <view>再接再厉，继续加油！</view>
-      <button bindtap="back">结束答题</button>
+      <view wx:if="{{score}}">再接再厉，继续加油！</view>
+      <view wx:else>别灰心，下次一定能拿分！</view>
+      <view>
+        <button bindtap="back">结束答题</button>
+      </view>
     </view>
   </wux-landscape>
+  <wux-popup closable visible="{{ loginVis }}" title="登录提示" content="你还未登录，是否登录并保存积分与朋友一决高下？" bind:close="onClose">
+    <button slot="footer" open-type="getUserInfo" bindgetuserinfo="loginSet">好呀！</button>
+    <button slot="footer" bindtap="goback">不需要</button>
+  </wux-popup>
   <view style="height:1rpx"></view>
   <view class="question-box">
     <view style="height:1rpx"></view>

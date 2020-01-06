@@ -1,9 +1,12 @@
 // miniprogram/pages/qa/qa.js
+const app = getApp();
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    loginVis: false,
+    unLogin: true,
     finish: false,
     isnext: false,
     isChoose: false,
@@ -86,6 +89,15 @@ Page({
     }
   },
   back() {
+    if (!wx.getStorageSync('name') && this.data.score != 0) {
+      this.setData({
+        loginVis: true
+      });
+    } else {
+      this.goback();
+    }
+  },
+  goback() {
     this.setData(
       {
         finish: false
@@ -96,6 +108,107 @@ Page({
         });
       }
     );
+  },
+
+  loginSet() {
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log('[云函数] [login] user openid: ', res);
+        app.globalData.openId = res.result.openId;
+        if (!res.result.name) {
+          wx.getUserInfo({
+            success: infoRes => {
+              console.log('object', infoRes);
+              wx.cloud.callFunction({
+                name: 'updateUser',
+                data: {
+                  name: infoRes.userInfo.nickName,
+                  score: 0,
+                  avatarUrl: infoRes.userInfo.avatarUrl
+                },
+                success: updateRes => {
+                  this.setData({
+                    userInfo: res.result
+                  });
+                  wx.setStorage({
+                    key: 'name',
+                    data: updateRes.result.name
+                  });
+                  wx.setStorage({
+                    key: 'avatarUrl',
+                    data: updateRes.result.avatarUrl
+                  });
+                  this.setScore(this.data.score, this.goback);
+                },
+                fail: err => {
+                  console.error('[云函数] [login] 调用失败', err);
+                }
+              });
+            },
+            fail(err) {
+              console.log(err);
+            }
+          });
+        } else {
+          this.setData({
+            userInfo: res.result
+          });
+          wx.setStorage({
+            key: 'name',
+            data: res.result.name
+          });
+          wx.setStorage({
+            key: 'avatarUrl',
+            data: res.result.avatarUrl
+          });
+          this.setScore(this.data.score, this.goback);
+        }
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err);
+      }
+    });
+  },
+
+  setScore: async (score, callback) => {
+    const db = wx.cloud.database();
+    const _ = db.command;
+    const [userRecord] = (
+      await db
+        .collection('user')
+        .where({
+          openId: app.globalData.openId
+        })
+        .get()
+    ).data;
+    console.log('asd', userRecord._id);
+
+    await db
+      .collection('user')
+      .doc(userRecord._id)
+      .update({
+        data: {
+          score: _.inc(parseInt(score))
+        },
+        success: res => {
+          console.log('[数据库] [更新记录] 成功：', res);
+          wx.showToast({
+            icon: 'none',
+            title: `挣了${score}积分，真开心!`
+          });
+          if (callback) {
+            callback();
+          }
+        },
+        fail: err => {
+          console.error('[数据库] [更新记录] 失败：', err);
+          if (callback) {
+            callback();
+          }
+        }
+      });
   },
 
   next() {
@@ -121,10 +234,20 @@ Page({
               }
             );
           } else {
-            console.log('zong', this.data.score);
-            this.setData({
-              finish: true
-            });
+            if (!wx.getStorageSync('name')) {
+              this.setData({
+                finish: true,
+                unLogin: true
+              });
+            } else {
+              this.setData({
+                finish: true,
+                unLogin: false
+              });
+              if (this.data.score != 0) {
+                this.setScore(this.data.score);
+              }
+            }
           }
         }, 500);
       } else {

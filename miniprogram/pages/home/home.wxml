@@ -13,7 +13,7 @@
       <view class="list-item" wx:for="{{list}}" wx:key="index">
         <view class="rank">{{index+1}}.</view>
         <view class="user-item">
-          <image src="{{item.avatar}}" class="avatar-img" />
+          <image src="{{item.avatarUrl||defaultAva}}" class="avatar-img" />
           <text class="list-item-text">{{item.name}}</text>
         </view>
         <text class="score">{{item.score}}分</text>

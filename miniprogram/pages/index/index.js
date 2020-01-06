@@ -3,13 +3,55 @@ const app = getApp();
 
 Page({
   data: {
-    avatarUrl: './user-unlogin.png',
+    avatarUrl: '../../images/user-unlogin.png',
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    requestResult: '',
+    loginVis: false,
+    update: false
   },
 
+  cancelL() {
+    this.setData({
+      loginVis: false
+    });
+  },
+  updateL() {
+    wx.getUserInfo({
+      success: infoRes => {
+        wx.cloud.callFunction({
+          name: 'updateUser',
+          data: {
+            name: infoRes.userInfo.nickName,
+            avatarUrl: infoRes.userInfo.avatarUrl
+          },
+          success: updateRes => {
+            this.setData({
+              userInfo: updateRes.result,
+              loginVis: false,
+              update: false
+            });
+            wx.setStorage({
+              key: 'name',
+              data: updateRes.result.name
+            });
+            wx.setStorage({
+              key: 'avatarUrl',
+              data: updateRes.result.avatarUrl
+            });
+            wx.showToast({ icon: 'none', title: '登录信息更新成功' });
+          },
+          fail: err => {
+            console.error('[云函数] [login] 调用失败', err);
+          }
+        });
+      },
+      fail(err) {
+        console.log(err);
+      }
+    });
+  },
   onLoad: function() {
     if (!wx.cloud) {
       wx.redirectTo({
@@ -17,7 +59,6 @@ Page({
       });
       return;
     }
-    debugger;
     if (wx.getStorageSync('name')) {
       this.data.userInfo.name = wx.getStorageSync('name');
       this.setData({
@@ -30,37 +71,73 @@ Page({
         userInfo: this.data.userInfo
       });
     }
-    // // 获取用户信息
-    // wx.getSetting({
-    //   success: res => {
-    //     debugger;
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-    //       wx.getUserInfo({
-    //         success: res => {
-    //           console.log('object', res);
-
-    //           this.setData({
-    //             avatarUrl: res.userInfo.avatarUrl,
-    //             userInfo: res.userInfo
-    //           });
-    //         }
-    //       });
-    //     }
-    //   }
-    // });
   },
 
-  // onGetUserInfo: function(e) {
-  //   if (!this.logged && e.detail.userInfo) {
-  //     this.setData({
-  //       logged: true,
-  //       avatarUrl: e.detail.userInfo.avatarUrl,
-  //       userInfo: e.detail.userInfo
-  //     });
-  //     console.log('a', e.detail.userInfo);
-  //   }
-  // },
+  onGetUserInfo: function(e) {
+    if (wx.getStorageSync('name')) {
+      this.setData({
+        loginVis: true
+      });
+    } else {
+      wx.cloud.callFunction({
+        name: 'login',
+        data: {},
+        success: res => {
+          console.log('[云函数] [login] user openid: ', res);
+          app.globalData.openId = res.result.openId;
+          if (!res.result.name) {
+            wx.getUserInfo({
+              success: infoRes => {
+                console.log('object', infoRes);
+                wx.cloud.callFunction({
+                  name: 'updateUser',
+                  data: {
+                    name: infoRes.userInfo.nickName,
+                    score: 0,
+                    avatarUrl: infoRes.userInfo.avatarUrl
+                  },
+                  success: updateRes => {
+                    this.setData({
+                      userInfo: res.result
+                    });
+                    wx.setStorage({
+                      key: 'name',
+                      data: updateRes.result.name
+                    });
+                    wx.setStorage({
+                      key: 'avatarUrl',
+                      data: updateRes.result.avatarUrl
+                    });
+                  },
+                  fail: err => {
+                    console.error('[云函数] [login] 调用失败', err);
+                  }
+                });
+              },
+              fail(err) {
+                console.log(err);
+              }
+            });
+          } else {
+            this.setData({
+              userInfo: res.result
+            });
+            wx.setStorage({
+              key: 'name',
+              data: res.result.name
+            });
+            wx.setStorage({
+              key: 'avatarUrl',
+              data: res.result.avatarUrl
+            });
+          }
+        },
+        fail: err => {
+          console.error('[云函数] [login] 调用失败', err);
+        }
+      });
+    }
+  },
 
   // onGetOpenid: function() {
   //   // 调用云函数
