@@ -1,0 +1,25 @@
+<!-- miniprogram/pages/history/history.wxml -->
+<cu-custom bgColor="bg-opacity" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">我的预报</view>
+</cu-custom>
+<view class="my-main">
+  <scroll-view scroll-y="{{true}}" class="card-box">
+    <view class="card" wx:for="{{queryResult}}">
+      <view>
+        <text class="status">预测天气状况:{{item.statusLabel}}</text>
+        <text class="fen">20积分</text>
+      </view>
+      <view class="bottom">
+        <view>
+          <view class="time">预测地区:{{item.area}}</view>
+          <view class="time">预测日期:{{item.dateLabel}}</view>
+        </view>
+        <view class="result">
+          <view class="day">{{item.distance}}天</view>
+          <view>出结果</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

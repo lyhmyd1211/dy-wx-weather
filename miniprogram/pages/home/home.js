@@ -148,7 +148,8 @@ Page({
                 return '积分数\n' + this.data.score;
               },
               fontSize: 24,
-              color: '#000'
+              color: '#000',
+              lineHeight: 30
             },
             itemStyle: {
               opacity: 0.6

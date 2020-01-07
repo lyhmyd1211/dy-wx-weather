@@ -1,7 +1,18 @@
 /* miniprogram/pages/qa/qa.wxss */
-.qa-main {
+/* .qa-main {
   height: calc(100vh - 60px);
   position: relative;
+} */
+.qa-main {
+  position: absolute;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(#8f0ab9, #9bcaf3);
 }
 
 .circle-box {
@@ -46,7 +57,7 @@
 
 .text-q {
   font-size: 15pt;
-  color: #353535;
+  color: #fff;
   text-align: center;
   margin: 100rpx 20rpx 10rpx 20rpx;
   height: 40%;
@@ -60,7 +71,7 @@
 
 .text-a {
   font-size: 14pt;
-  color: #353535;
+  color: #fff;
   text-align: center;
   margin: 50rpx auto;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);

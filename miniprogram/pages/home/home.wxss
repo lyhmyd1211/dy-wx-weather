@@ -36,6 +36,7 @@
 
 .list-item {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 
@@ -48,7 +49,6 @@
 }
 
 .rank {
-  flex: 1;
   color: #888;
 }
 
@@ -60,7 +60,7 @@
 .user-item {
   display: flex;
   align-items: center;
-  flex: 10;
+  width: 50%;
 }
 
 .list-item-text {
@@ -68,7 +68,9 @@
 }
 
 .score {
-  flex: 2
+  width: 30%;
+  text-align: right;
+
 }
 
 #mychart-dom-bar {

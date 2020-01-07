@@ -1,3 +1,10 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "Icon",
+
+  "usingComponents": {
+    "wux-date-picker": "../../lib/date-picker/index",
+    "wux-cell": "../../lib/cell/index",
+    "wux-icon": "../../lib/icon/index",
+    "wux-picker": "../../lib/picker/index"
+  }
 }

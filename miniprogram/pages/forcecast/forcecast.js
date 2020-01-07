@@ -110,6 +110,12 @@ Page({
     });
   },
 
+  history() {
+    wx.navigateTo({
+      url: '../history/history'
+    });
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

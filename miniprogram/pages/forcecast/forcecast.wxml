@@ -6,7 +6,10 @@
   <view class="content">
     <view class="cur-box" wx:if="{{weatherData}}">
       <!-- <view class="location1">{{location1}}</view> -->
-      <view class="location2">{{location2||'无法定位，点击重试'}}</view>
+      <view class="location2">
+        <wux-icon type="pin" />
+        {{location2||'无法定位，点击重试'}}
+      </view>
       <view class="date">{{currentTime}}</view>
       <view class="curT">
         <view>{{weatherData.curT}}</view>
@@ -24,7 +27,7 @@
     </view>
     <view class="bottom-box">
       <button class="my-box btn-box" bindtap="begin">开始预报</button>
-      <button class="history-box btn-box">预报历史</button>
+      <button class="history-box btn-box" bindtap="history">预报历史</button>
     </view>
   </view>
 </view>
