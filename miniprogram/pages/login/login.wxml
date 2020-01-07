@@ -1,0 +1,5 @@
+<!-- miniprogram/pages/login/login.wxml -->
+<view class="login-main">
+  <view class="tip">您暂未获取微信授权，将无法正常使用小程序的功能~请点击“授权登录”按钮，打开头像、昵称等信息的授权。</view>
+  <button class="login-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">授权登录</button>
+</view>

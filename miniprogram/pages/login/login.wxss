@@ -1,0 +1,26 @@
+/* miniprogram/pages/login/login.wxss */
+.login-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 60% 100rpx;
+}
+.tip {
+  line-height: 50rpx;
+  color: #888;
+  font-size: 10pt;
+}
+.login-btn {
+  color: #fff;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 50rpx 80rpx;
+  background-color: rgba(32, 105, 253, 1);
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}

@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/qa/qa",
+    "pages/login/login",
     "pages/home/home",
+    "pages/qa/qa",
     "pages/index/index",
     "pages/forcecast/forcecast",
     "pages/game/game",
@@ -11,7 +12,8 @@
     "color": "#7f8389",
     "selectedColor": "#00a8f3",
     "borderStyle": "black",
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/home/home",
         "text": "首页"
       },
