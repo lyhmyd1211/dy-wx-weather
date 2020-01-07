@@ -1,2 +1,7 @@
-<!--miniprogram/pages/beginForceCast/begin.wxml-->
-<text>miniprogram/pages/beginForceCast/begin.wxml</text>
+<!-- miniprogram/pages/beginForceCast/begin.wxml -->
+<cu-custom bgColor="bg-opacity" isBack="{{true}}">
+  <view slot="backText">返回</view>
+</cu-custom>
+<view class="forc-game">
+  <view class="box"></view>
+</view>

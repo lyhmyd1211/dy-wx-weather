@@ -65,11 +65,40 @@ Page({
   data: {
     defaultAva: '../../images/user-unlogin.png',
     list: [],
+    score: '0',
     ec: {
       onInit: initChart // 3、将数据放入到里面
     }
   },
-
+  queryScore(call) {
+    const db = wx.cloud.database();
+    // 查询当前用户所有的 user
+    console.log('app.globalData.openId', app.globalData.openId);
+    db.collection('user')
+      .where({
+        openId: app.globalData.openId
+      })
+      .get({
+        success: res => {
+          console.log('[数据库] [score] 成功: ', res);
+          this.setData(
+            {
+              score: res.data[0].score
+            },
+            () => {
+              call();
+            }
+          );
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '查询分数失败，检查网络配置'
+          });
+          console.error('[数据库] [查询记录] 失败：', err);
+        }
+      });
+  },
   queryRank: function() {
     const db = wx.cloud.database();
     // 查询当前用户所有的 user
@@ -96,8 +125,7 @@ Page({
   },
   onLoad() {},
   onReady() {
-    setTimeout(() => {
-      // 获取 chart 实例的方式
+    this.queryScore(() => {
       chart.setOption({
         series: [
           {
@@ -117,7 +145,7 @@ Page({
             label: {
               position: ['50%', '50%'],
               formatter: () => {
-                return '积分数\n' + wx.getStorageSync('score');
+                return '积分数\n' + this.data.score;
               },
               fontSize: 24,
               color: '#000'
@@ -136,6 +164,6 @@ Page({
           }
         ]
       });
-    }, 2000);
+    });
   }
 });

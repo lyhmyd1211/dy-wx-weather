@@ -23,12 +23,12 @@ exports.main = async () => {
     } else {
       name = userInfo.name;
       avatarUrl = userInfo.avatarUrl;
-      gender = userInfo.gender;
+      score = userInfo.score;
     }
     return {
       name: name || null,
       avatarUrl: avatarUrl || null,
-      gender: gender || null,
+      score: score || null,
       openId: OPENID
     };
   } catch (e) {
