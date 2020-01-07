@@ -1,6 +1,6 @@
 /* miniprogram/pages/home/home.wxss */
 .home-main {
-  height: 100%;
+  height: calc(100vh - 60px);
   width: 100%;
   position: absolute;
 }

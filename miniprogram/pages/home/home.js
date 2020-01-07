@@ -15,20 +15,32 @@ function initChart(canvas, width, height) {
       {
         radius: '80%',
         type: 'liquidFill',
-        data: [0.2],
+        data: [0.2, 0.2],
+        color: ['#b243d4', '#b243d4'],
         outline: {
-          show: false
+          borderDistance: 0,
+          itemStyle: {
+            borderWidth: 2,
+            borderColor: '#eee',
+            shadowBlur: 20,
+            shadowColor: 'rgba(255, 0, 0, 1)'
+          }
         },
         label: {
           position: ['50%', '50%'],
-          formatter: function() {
-            return '60';
+          formatter: () => {
+            return '积分数';
           },
           fontSize: 24,
-          color: '#D94854'
+          color: '#000'
         },
         itemStyle: {
           opacity: 0.6
+        },
+        backgroundStyle: {
+          borderWidth: 0,
+          borderColor: 'rgba(255,255,255,0)',
+          color: 'rgba(255,255,255,0)'
         },
         emphasis: {
           show: false
@@ -58,20 +70,6 @@ Page({
     }
   },
 
-  login() {
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res);
-        app.globalData.openid = res.result.openid;
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err);
-      }
-    });
-  },
-
   queryRank: function() {
     const db = wx.cloud.database();
     // 查询当前用户所有的 user
@@ -96,11 +94,48 @@ Page({
   onShow: function(options) {
     this.queryRank();
   },
+  onLoad() {},
   onReady() {
-    setTimeout(function() {
+    setTimeout(() => {
       // 获取 chart 实例的方式
+      chart.setOption({
+        series: [
+          {
+            radius: '80%',
+            type: 'liquidFill',
+            data: [0.2, 0.2],
+            color: ['#b243d4', '#b243d4'],
+            outline: {
+              borderDistance: 0,
+              itemStyle: {
+                borderWidth: 2,
+                borderColor: '#eee',
+                shadowBlur: 20,
+                shadowColor: 'rgba(255, 0, 0, 1)'
+              }
+            },
+            label: {
+              position: ['50%', '50%'],
+              formatter: () => {
+                return '积分数\n' + wx.getStorageSync('score');
+              },
+              fontSize: 24,
+              color: '#000'
+            },
+            itemStyle: {
+              opacity: 0.6
+            },
+            backgroundStyle: {
+              borderWidth: 0,
+              borderColor: 'rgba(255,255,255,0)',
+              color: 'rgba(255,255,255,0)'
+            },
+            emphasis: {
+              show: false
+            }
+          }
+        ]
+      });
     }, 2000);
-
-    // this.login();
   }
 });

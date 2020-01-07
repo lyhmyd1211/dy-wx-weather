@@ -98,7 +98,7 @@ Page({
                   },
                   success: updateRes => {
                     this.setData({
-                      userInfo: res.result
+                      userInfo: updateRes.result
                     });
                     wx.setStorage({
                       key: 'name',
@@ -107,6 +107,10 @@ Page({
                     wx.setStorage({
                       key: 'avatarUrl',
                       data: updateRes.result.avatarUrl
+                    });
+                    wx.setStorage({
+                      key: 'score',
+                      data: '0'
                     });
                   },
                   fail: err => {
@@ -129,6 +133,10 @@ Page({
             wx.setStorage({
               key: 'avatarUrl',
               data: res.result.avatarUrl
+            });
+            wx.setStorage({
+              key: 'score',
+              data: res.result.score
             });
           }
         },

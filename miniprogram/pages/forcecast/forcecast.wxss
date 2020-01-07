@@ -67,6 +67,7 @@
   -ms-border-radius: 50rpx;
   -o-border-radius: 50rpx;
 }
+
 .pic {
   width: 100rpx;
   height: 100rpx;

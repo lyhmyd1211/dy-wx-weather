@@ -140,6 +140,10 @@ Page({
                     key: 'avatarUrl',
                     data: updateRes.result.avatarUrl
                   });
+                  wx.setStorage({
+                    key: 'score',
+                    data: '0'
+                  });
                   this.setScore(this.data.score, this.goback);
                 },
                 fail: err => {
@@ -162,6 +166,10 @@ Page({
           wx.setStorage({
             key: 'avatarUrl',
             data: res.result.avatarUrl
+          });
+          wx.setStorage({
+            key: 'score',
+            data: res.result.score
           });
           this.setScore(this.data.score, this.goback);
         }
