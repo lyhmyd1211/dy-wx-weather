@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "openapi": []
+  },
+  "triggers": [
+    {
+      "name": "forcecastResult",
+      "type": "timer",
+      "config": "0 0 20 * * * *"
+    }
+  ]
+}
