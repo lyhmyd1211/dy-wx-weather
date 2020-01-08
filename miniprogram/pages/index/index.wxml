@@ -1,4 +1,8 @@
 <!-- index.wxml -->
+<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}">
+  <!-- <view slot="backText">返回</view> -->
+  <view slot="content">我的</view>
+</cu-custom>
 <view class="container">
   <!-- 用户 openid -->
   <view class="userinfo">
@@ -14,5 +18,11 @@
         确定
       </button>
     </wux-popup>
+  </view>
+  <view class="userinfo" bindtap="myRecord">
+    <text>我的积分明细</text>
+  </view>
+  <view class="userinfo" bindtap="myForcecast">
+    <text>我的预报</text>
   </view>
 </view>

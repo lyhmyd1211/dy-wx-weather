@@ -36,8 +36,12 @@ const formatNumber = n => {
   n = n.toString();
   return n[1] ? n : '0' + n;
 };
-
+const getRandom = (min, max) => {
+  parseInt(Math.random() * (max - min + 1) + min, 10);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
 module.exports = {
   formatTime: formatTime,
-  getCurrentDate
+  getCurrentDate,
+  getRandom
 };

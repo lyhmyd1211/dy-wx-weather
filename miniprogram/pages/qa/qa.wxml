@@ -5,7 +5,7 @@
 <view class="qa-main">
   <!-- <view class="time">{{time}}</view> -->
   <view class="page__bd page__bd_spacing circle-box">
-    <wux-circle size="50" percent="{{percent}}" color="#33cd5f" sAngle="270" wx:show="{{!isnext}}">
+    <wux-circle size="50" percent="{{percent}}" color="{{percent<90?'#33cd5f':'#e64340'}}" sAngle="270" wx:if="{{!isnext}}">
       {{time}}
     </wux-circle>
   </view>

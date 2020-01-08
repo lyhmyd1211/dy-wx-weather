@@ -27,6 +27,7 @@ function initChart(canvas, width, height) {
           }
         },
         label: {
+          show: false,
           position: ['50%', '50%'],
           formatter: () => {
             return '积分数';
@@ -56,6 +57,7 @@ function initChart(canvas, width, height) {
 Page({
   onShareAppMessage: function(res) {
     return {
+      visible: false,
       title: 'ECharts',
       path: '/pages/index/index',
       success: function() {},
@@ -70,13 +72,26 @@ Page({
       onInit: initChart // 3、将数据放入到里面
     }
   },
+  showguize() {
+    this.setData({
+      visible: true
+    });
+  },
+  onClose() {
+    this.setData({
+      visible: false
+    });
+  },
   queryScore(call) {
     const db = wx.cloud.database();
+    console.log(
+      'aaaaassss',
+      wx.getStorageSync('openId') || app.globalData.openId
+    );
     // 查询当前用户所有的 user
-    console.log('app.globalData.openId', app.globalData.openId);
     db.collection('user')
       .where({
-        openId: app.globalData.openId
+        openId: wx.getStorageSync('openId') || app.globalData.openId
       })
       .get({
         success: res => {
@@ -86,7 +101,9 @@ Page({
               score: res.data[0].score
             },
             () => {
-              call();
+              if (call) {
+                call();
+              }
             }
           );
         },
@@ -121,50 +138,128 @@ Page({
       });
   },
   onShow: function(options) {
+    const db = wx.cloud.database();
+    db.collection('user')
+      .where({
+        openId: wx.getStorageSync('openId') || -1
+      })
+      .get({
+        success: res => {
+          console.log('[数据库] [查询记录] 成功: ', res);
+          if (res.data.length == 0) {
+            wx.showToast({
+              icon: 'none',
+              title: '当前未登录'
+            });
+            wx.navigateTo({
+              url: '../login/login'
+            });
+            wx.clearStorage();
+          }
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '当前未登录'
+          });
+          wx.navigateTo({
+            url: '../login/login'
+          });
+          wx.clearStorage();
+          console.error('[数据库] [查询记录] 失败：', err);
+        }
+      });
     this.queryRank();
+    this.queryScore();
+    // if (this.data.chart) {
+    //   this.queryScore(() => {
+    //     this.data.chart.setOption({
+    //       series: [
+    //         {
+    //           radius: '80%',
+    //           type: 'liquidFill',
+    //           data: [0.2, 0.2],
+    //           color: ['#b243d4', '#b243d4'],
+    //           outline: {
+    //             borderDistance: 0,
+    //             itemStyle: {
+    //               borderWidth: 2,
+    //               borderColor: '#eee',
+    //               shadowBlur: 20,
+    //               shadowColor: 'rgba(255, 0, 0, 1)'
+    //             }
+    //           },
+    //           label: {
+    //             position: ['50%', '50%'],
+    //             formatter: () => {
+    //               return '积分数\n' + this.data.score;
+    //             },
+    //             fontSize: 24,
+    //             color: '#000',
+    //             lineHeight: 30
+    //           },
+    //           itemStyle: {
+    //             opacity: 0.6
+    //           },
+    //           backgroundStyle: {
+    //             borderWidth: 0,
+    //             borderColor: 'rgba(255,255,255,0)',
+    //             color: 'rgba(255,255,255,0)'
+    //           },
+    //           emphasis: {
+    //             show: false
+    //           }
+    //         }
+    //       ]
+    //     });
+    //   });
+    // }
   },
   onLoad() {},
   onReady() {
-    this.queryScore(() => {
-      chart.setOption({
-        series: [
-          {
-            radius: '80%',
-            type: 'liquidFill',
-            data: [0.2, 0.2],
-            color: ['#b243d4', '#b243d4'],
-            outline: {
-              borderDistance: 0,
-              itemStyle: {
-                borderWidth: 2,
-                borderColor: '#eee',
-                shadowBlur: 20,
-                shadowColor: 'rgba(255, 0, 0, 1)'
-              }
-            },
-            label: {
-              position: ['50%', '50%'],
-              formatter: () => {
-                return '积分数\n' + this.data.score;
-              },
-              fontSize: 24,
-              color: '#000',
-              lineHeight: 30
-            },
-            itemStyle: {
-              opacity: 0.6
-            },
-            backgroundStyle: {
-              borderWidth: 0,
-              borderColor: 'rgba(255,255,255,0)',
-              color: 'rgba(255,255,255,0)'
-            },
-            emphasis: {
-              show: false
-            }
-          }
-        ]
-      });
-    });
+    // this.setData({
+    //   chart
+    // });
+    // this.queryScore(() => {
+    //   chart.setOption({
+    //     series: [
+    //       {
+    //         radius: '80%',
+    //         type: 'liquidFill',
+    //         data: [0.2, 0.2],
+    //         color: ['#b243d4', '#b243d4'],
+    //         outline: {
+    //           borderDistance: 0,
+    //           itemStyle: {
+    //             borderWidth: 2,
+    //             borderColor: '#eee',
+    //             shadowBlur: 20,
+    //             shadowColor: 'rgba(255, 0, 0, 1)'
+    //           }
+    //         },
+    //         label: {
+    //           position: ['50%', '50%'],
+    //           formatter: () => {
+    //             return '积分数\n' + this.data.score;
+    //           },
+    //           fontSize: 24,
+    //           color: '#000',
+    //           lineHeight: 30
+    //         },
+    //         itemStyle: {
+    //           opacity: 0.6
+    //         },
+    //         backgroundStyle: {
+    //           borderWidth: 0,
+    //           borderColor: 'rgba(255,255,255,0)',
+    //           color: 'rgba(255,255,255,0)'
+    //         },
+    //         emphasis: {
+    //           show: false
+    //         }
+    //       }
+    //     ]
+    //   });
+    // });
   }
 });

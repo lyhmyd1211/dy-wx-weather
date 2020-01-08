@@ -1,6 +1,5 @@
 {
   "usingComponents": {
-    "ec-canvas": "../../ec-canvas/ec-canvas",
     "wux-landscape": "../../lib/landscape/index"
   }
 }

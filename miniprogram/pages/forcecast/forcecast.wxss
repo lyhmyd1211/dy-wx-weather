@@ -12,7 +12,7 @@
 }
 
 .content {
-  margin-top: 60px;
+  margin-top: 70px;
   color: #fff;
 }
 
@@ -53,13 +53,18 @@
 
 .bottom-box {
   margin-top: 100rpx;
+  position: absolute;
+  bottom: 50rpx;
+  width: 100%;
 }
 
 .btn-box {
+  width: 600rpx;
+  max-width: 80%;
   color: #fff;
   font-size: 20pt;
   height: 200rpx;
-  margin: 50rpx 50rpx;
+  margin: 50rpx auto;
   line-height: 200rpx;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 50rpx;

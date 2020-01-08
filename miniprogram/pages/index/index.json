@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "wux-popup": "../../lib/popup/index"
+    "wux-popup": "../../lib/popup/index",
+    "wux-cell": "../../lib/cell/index"
   }
 }

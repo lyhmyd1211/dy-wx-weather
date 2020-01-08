@@ -1,11 +1,13 @@
 // miniprogram/pages/login/login.js
 const app = getApp();
-
+import { $wuxLoading } from '../../lib/index';
 Page({
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: {
+    loading: true
+  },
 
   onGetUserInfo: function(e) {
     wx.cloud.callFunction({
@@ -14,6 +16,10 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res);
         app.globalData.openId = res.result.openId;
+        wx.setStorage({
+          key: 'openId',
+          data: res.result.openId
+        });
         if (!res.result.name) {
           wx.getUserInfo({
             success: infoRes => {
@@ -82,6 +88,10 @@ Page({
         success: result => {},
         fail: () => {},
         complete: () => {}
+      });
+    } else {
+      this.setData({
+        loading: false
       });
     }
   },

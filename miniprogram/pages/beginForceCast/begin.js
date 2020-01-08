@@ -12,47 +12,54 @@ Page({
     status: '晴',
     statusCode: ['100'],
     visible: false,
+    dn: '白天',
+    dnCode: '1',
+    score: '10',
     selectTime: getCurrentDate() + 24 * 60 * 60 * 1000,
     displayValue: formatTime(
       new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       'cn'
     ),
     curDate: getCurrentDate(),
+    dnOptions: [
+      {
+        label: '白天',
+        value: '1'
+      },
+      {
+        label: '夜晚',
+        value: '2'
+      }
+    ],
     statusOptions: [
       {
-        index: 'A.',
         label: '晴',
         value: '100',
         des: ''
       },
       {
-        index: 'B.',
         label: '多云',
         value: '101',
         des: ''
       },
       {
-        index: 'C.',
         label: '阴',
         value: '104',
         des: ''
       },
       {
-        index: 'D.',
         label: '雨',
         value: '399',
         des: ''
       },
       {
-        index: 'E.',
         label: '雨夹雪',
-        value: '100',
+        value: '404',
         des: ''
       },
       {
-        index: 'F.',
         label: '雪',
-        value: '100',
+        value: '499',
         des: ''
       }
     ]
@@ -65,15 +72,36 @@ Page({
     this.setData({ visible: false });
   },
   onConfirm(e) {
+    debugger;
+    let score = 10;
+    let date = (e.detail.date - getCurrentDate()) / 24 / 60 / 60 / 1000;
+    if (date <= 3) {
+      score = 10;
+    } else if (date <= 7) {
+      score = 30;
+    } else if (date <= 15) {
+      score = 50;
+    } else if (date <= 20) {
+      score = 70;
+    } else if (date <= 30) {
+      score = 100;
+    }
     this.setData({
       selectTime: e.detail.date,
-      displayValue: e.detail.displayValue.join('')
+      displayValue: e.detail.displayValue.join(''),
+      score: score
     });
   },
   onConfirm1(e) {
     this.setData({
       status: e.detail.label,
       statusCode: e.detail.value
+    });
+  },
+  onConfirm2(e) {
+    this.setData({
+      dn: e.detail.label,
+      dnCode: e.detail.value
     });
   },
   _getlocation() {
@@ -122,7 +150,10 @@ Page({
         type: this.data.statusCode[0],
         openId: app.globalData.openId,
         createDate: getCurrentDate(),
-        status: 0
+        status: 0,
+        score: this.data.score,
+        dn: this.data.dn,
+        dnCode: this.data.dnCode
       },
       success: res => {
         console.log('[数据库] [新增] 成功: ', res);

@@ -1,31 +1,20 @@
-<!-- miniprogram/pages/home/home.wxml -->
-<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}">
-  <!-- <view slot="backText">返回</view> -->
-  <view slot="content">首页</view>
+<!-- miniprogram/pages/qaHome/qaHome.wxml -->
+<cu-custom bgColor="bg-opacity" isBack="{{true}}">
+  <view slot="content">知识竞答</view>
 </cu-custom>
-<view class="home-main">
-  <view class="guize" bindtap="showguize">规则</view>
-  <view class="titles">
-    <view>积分数</view>
-    <view>{{score}}</view>
-  </view>
-  <view class="box">
-    <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
-  </view>
-  <view class="home-content" style="height: 55%">
-    <text class="rank-text">积分排名</text>
-    <scroll-view scroll-y="true" style="height: 100%">
-      <view class="list-item" wx:for="{{list}}" wx:key="index">
-        <view class="rank">{{index+1}}.</view>
-        <view class="user-item">
-          <image src="{{item.avatarUrl||defaultAva}}" class="avatar-img" />
-          <text class="list-item-text">{{item.name}}</text>
-        </view>
-        <text class="score">{{item.score}}分</text>
+<view class="qa-home-main">
+  <view class="qa-content">
+    <view class="top">
+      <view class="userinfo-avatar" style="background-image: url({{userInfo.avatarUrl||info.avatarUrl||avataUrl}})"></view>
+      <view class="fen">
+        <image src="cloud://yun-weather-17ac58.7975-yun-weather-17ac58-1301058436/images/gd1.png" />
+        <text style="margin-left:5px">{{info.score}}分</text>
       </view>
-    </scroll-view>
+      <!-- <view class="guize" bindtap="showguize">规则</view> -->
+    </view>
+    <view class="btn" bindtap="start">开始答题</view>
   </view>
-  <wux-landscape visible="{{ visible }}" bind:close="onClose">
+  <!-- <wux-landscape visible="{{ visible }}" bind:close="onClose">
     <view style="color:#fff;text-align:left">
       <view>（1）活动参与者先通过手机微信关注“都匀气象“微信公众号，打开手机定位，进入活动平台成功验证登录信息后参与活动。</view>
       <view>（2）本活动共分为气象知识竞答和全民预报两个板块。</view>
@@ -36,5 +25,5 @@
       <view>（5）系统将公布参与者个人积分累积情况及排名。</view>
       <view>（6）本次活动最终解释权归主办方所有。</view>
     </view>
-  </wux-landscape>
+  </wux-landscape> -->
 </view>

@@ -1,6 +1,6 @@
 <!-- miniprogram/pages/forcecast/forcecast.wxml -->
 <cu-custom bgColor="bg-opacity" isBack="{{true}}">
-  <view slot="backText">返回</view>
+  <view slot="content">全民预报</view>
 </cu-custom>
 <view class="fc-main">
   <view class="content">

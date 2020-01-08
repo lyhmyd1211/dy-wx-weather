@@ -71,3 +71,13 @@
 .submit button {
   width: 60%;
 }
+
+.bottom-fen {
+  text-align: right;
+  margin: 30rpx;
+}
+
+.box image {
+  width: 95%;
+  margin: 0 2%;
+}

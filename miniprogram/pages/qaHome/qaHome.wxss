@@ -1,0 +1,86 @@
+/* miniprogram/pages/qaHome/qaHome.wxss */
+.qa-home-main {
+  position: absolute;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(#8f0ab9, #9bcaf3);
+}
+
+.qa-content {
+  margin-top: 60px;
+  padding: 30rpx;
+}
+
+.userinfo-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  background-size: cover;
+  background-color: white;
+}
+
+.userinfo-avatar:after {
+  border: none;
+}
+
+.fen {
+  color: #fff;
+  margin-left: 50rpx;
+  padding: 10rpx 20rpx;
+  background-color: rgba(255, 255, 255, 0.15);
+  font-size: 16px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.guize {
+  color: #fff;
+  margin-left: 50rpx;
+  padding: 10rpx 20rpx;
+  background-color: rgba(255, 255, 255, 0.15);
+  font-size: 16px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.fen image {
+  width: 20px;
+  height: 20px;
+  vertical-align: text-bottom;
+}
+
+.top {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+
+}
+
+.btn {
+  color: #fff;
+  margin: 200px auto;
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+  font-size: 17pt;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 150px;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
+  -ms-border-radius: 150px;
+  -o-border-radius: 150px;
+}

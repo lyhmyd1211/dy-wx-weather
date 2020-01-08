@@ -133,7 +133,39 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function() {
+    const db = wx.cloud.database();
+    db.collection('user')
+      .where({
+        openId: wx.getStorageSync('openId') || -1
+      })
+      .get({
+        success: res => {
+          console.log('[数据库] [查询记录] 成功: ', res);
+          if (res.data.length == 0) {
+            wx.showToast({
+              icon: 'none',
+              title: '当前未登录'
+            });
+            wx.navigateTo({
+              url: '../login/login'
+            });
+            wx.clearStorage();
+          }
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '当前未登录'
+          });
+          wx.navigateTo({
+            url: '../login/login'
+          });
+          wx.clearStorage();
+          console.error('[数据库] [查询记录] 失败：', err);
+        }
+      });
+  },
 
   /**
    * 生命周期函数--监听页面隐藏

@@ -1,0 +1,12 @@
+<!-- miniprogram/pages/record/record.wxml -->
+<cu-custom bgColor="bg-opacity" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">我的积分明细</view>
+</cu-custom>
+<view class="record-main">
+  <view class="record-content">
+    <wux-timeline>
+      <wux-timeline-item wx:for="{{list}}" wx:key="index" content="{{item.content}}" />
+    </wux-timeline>
+  </view>
+</view>

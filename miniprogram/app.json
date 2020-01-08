@@ -1,13 +1,14 @@
 {
   "pages": [
+    "pages/login/login",
+    "pages/qa/qa",
+    "pages/qaHome/qaHome",
     "pages/index/index",
     "pages/home/home",
     "pages/history/history",
     "pages/beginForceCast/begin",
     "pages/forcecast/forcecast",
-    "pages/login/login",
-    "pages/qa/qa",
-    "pages/game/game"
+    "pages/record/record"
   ],
   "tabBar": {
     "color": "#7f8389",
@@ -18,7 +19,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/qa/qa",
+        "pagePath": "pages/qaHome/qaHome",
         "text": "知识竞答"
       },
       {

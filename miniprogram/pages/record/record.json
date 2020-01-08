@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "wux-timeline": "../../lib/timeline/index",
+    "wux-timeline-item": "../../lib/timeline-item/index"
+  }
+}

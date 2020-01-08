@@ -1,5 +1,0 @@
-<!-- miniprogram/pages/game/game.wxml -->
-<view class="game-main">
-  <button class="btn jingda" bindtap="qaClick">气象知识竞答</button>
-  <button class="btn yubao" bindtap="fcClick">全民预报</button>
-</view>

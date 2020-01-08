@@ -1,5 +1,7 @@
 // miniprogram/pages/qa/qa.js
 const app = getApp();
+import ti from './ti';
+import { getRandom } from '../../utils/util';
 Page({
   /**
    * 页面的初始数据
@@ -18,58 +20,7 @@ Page({
     time: 20,
     percent: 10,
     aTitle: ['A. ', 'B. ', 'C. ', 'D. ', 'E. '],
-    list: [
-      {
-        q:
-          '到2020年，建立较为完善的人工影响天气工作体系，基础研究和应用技术研发取得重要成果，基础保障能力显著提升，协调指挥和安全监管水平得到增强，人工增雨（雪）作业年增加降水( B )以上，人工防雹保护面积由目前的47万平方公里增加到54万平方公里以上，服务经济社会发展的效益明显提高。',
-        qId: '1',
-        correct: '2',
-        a: [
-          {
-            aId: '1',
-            atext:
-              '我猜选A我猜选A我猜选A我猜选A我猜选A我猜选A我猜选A我猜选A我猜选A我猜选A我猜选A我猜选A我猜选A'
-          },
-          {
-            aId: '2',
-            atext:
-              '我猜选B我猜选B我猜选B我猜选B我猜选B我猜选B我猜选B我猜选B我猜选B我猜选B我猜选B'
-          },
-          { aId: '3', atext: '我猜选C我猜选C我猜选C我猜选C我猜选D我猜选D' },
-          {
-            aId: '4',
-            atext: '我猜选D我猜选D我猜选D我猜选D我猜选D我猜选D我猜选D'
-          }
-        ]
-      },
-      {
-        q: 'aaaaaaaaaaaaaaaaaaaa',
-        qId: '1',
-        correct: '2',
-        a: [
-          {
-            aId: '1',
-            atext:
-              '这次选A这次选A这次选A这次选A这次选A这次选A这次选A这次选A这次选A'
-          },
-          {
-            aId: '2',
-            atext:
-              '这次选B这次选B这次选B这次选B这次选B这次选B这次选B这次选B这次选B'
-          },
-          {
-            aId: '3',
-            atext:
-              '这次选C这次选C这次选C这次选C这次选C这次选C这次选C这次选C这次选C'
-          },
-          {
-            aId: '4',
-            atext:
-              '这次选D这次选D这次选D这次选D这次选D这次选D这次选D这次选D这次选D'
-          }
-        ]
-      }
-    ]
+    list: []
   },
   choose(e) {
     if (!this.data.isChoose) {
@@ -89,96 +40,17 @@ Page({
     }
   },
   back() {
-    if (!wx.getStorageSync('name') && this.data.score != 0) {
-      this.setData({
-        loginVis: true
-      });
-    } else {
-      this.goback();
-    }
-  },
-  goback() {
     this.setData(
       {
         finish: false
       },
       () => {
         wx.switchTab({
-          url: '../game/game'
+          url: '../qaHome/qaHome'
         });
       }
     );
   },
-
-  // loginSet() {
-  //   wx.cloud.callFunction({
-  //     name: 'login',
-  //     data: {},
-  //     success: res => {
-  //       console.log('[云函数] [login] user openid: ', res);
-  //       app.globalData.openId = res.result.openId;
-  //       if (!res.result.name) {
-  //         wx.getUserInfo({
-  //           success: infoRes => {
-  //             console.log('object', infoRes);
-  //             wx.cloud.callFunction({
-  //               name: 'updateUser',
-  //               data: {
-  //                 name: infoRes.userInfo.nickName,
-  //                 score: 0,
-  //                 avatarUrl: infoRes.userInfo.avatarUrl
-  //               },
-  //               success: updateRes => {
-  //                 this.setData({
-  //                   userInfo: res.result
-  //                 });
-  //                 wx.setStorage({
-  //                   key: 'name',
-  //                   data: updateRes.result.name
-  //                 });
-  //                 wx.setStorage({
-  //                   key: 'avatarUrl',
-  //                   data: updateRes.result.avatarUrl
-  //                 });
-  //                 wx.setStorage({
-  //                   key: 'score',
-  //                   data: '0'
-  //                 });
-  //                 this.setScore(this.data.score, this.goback);
-  //               },
-  //               fail: err => {
-  //                 console.error('[云函数] [login] 调用失败', err);
-  //               }
-  //             });
-  //           },
-  //           fail(err) {
-  //             console.log(err);
-  //           }
-  //         });
-  //       } else {
-  //         this.setData({
-  //           userInfo: res.result
-  //         });
-  //         wx.setStorage({
-  //           key: 'name',
-  //           data: res.result.name
-  //         });
-  //         wx.setStorage({
-  //           key: 'avatarUrl',
-  //           data: res.result.avatarUrl
-  //         });
-  //         wx.setStorage({
-  //           key: 'score',
-  //           data: res.result.score
-  //         });
-  //         this.setScore(this.data.score, this.goback);
-  //       }
-  //     },
-  //     fail: err => {
-  //       console.error('[云函数] [login] 调用失败', err);
-  //     }
-  //   });
-  // },
 
   setScore: async (score, callback) => {
     const db = wx.cloud.database();
@@ -187,11 +59,10 @@ Page({
       await db
         .collection('user')
         .where({
-          openId: app.globalData.openId
+          openId: wx.getStorageSync('openId') || app.globalData.openId
         })
         .get()
     ).data;
-    console.log('asd', userRecord._id);
 
     await db
       .collection('user')
@@ -206,17 +77,28 @@ Page({
             icon: 'none',
             title: `挣了${score}积分，真开心!`
           });
-          if (callback) {
-            callback();
-          }
         },
         fail: err => {
           console.error('[数据库] [更新记录] 失败：', err);
-          if (callback) {
-            callback();
-          }
         }
       });
+    await db.collection('record').add({
+      data: {
+        openId: wx.getStorageSync('openId') || app.globalData.openId,
+        score: parseInt(score),
+        source: '知识问答',
+        createTime: new Date().getTime()
+      },
+      success: res => {
+        console.log('[数据库] [新增] 成功：', res);
+      },
+      fail: err => {
+        console.error('[数据库] [更新记录] 失败：', err);
+      }
+    });
+    if (callback) {
+      await callback();
+    }
   },
 
   next() {
@@ -242,20 +124,19 @@ Page({
               }
             );
           } else {
-            if (!wx.getStorageSync('name')) {
-              this.setData({
-                finish: true,
-                unLogin: true
-              });
-            } else {
-              this.setData({
+            clearInterval(this.data.timer);
+            clearTimeout(this.data.aTimer);
+            this.setData(
+              {
                 finish: true,
                 unLogin: false
-              });
-              if (this.data.score != 0) {
-                this.setScore(this.data.score);
+              },
+              () => {
+                if (this.data.score != 0) {
+                  this.setScore(this.data.score);
+                }
               }
-            }
+            );
           }
         }, 500);
       } else {
@@ -274,12 +155,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    let tmp = [];
+    for (let index = 0; index < 10; index++) {
+      tmp.push(ti[getRandom(0, ti.length - 1)]);
+    }
     this.setData(
       {
-        curData: this.data.list[this.data.current]
+        list: tmp
       },
       () => {
-        this.next();
+        this.setData(
+          {
+            curData: this.data.list[this.data.current]
+          },
+          () => {
+            this.next();
+          }
+        );
       }
     );
   },
