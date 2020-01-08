@@ -10,7 +10,7 @@ Page({
     location: '',
     area: '',
     status: '晴',
-    statusCode: '100',
+    statusCode: ['100'],
     visible: false,
     selectTime: getCurrentDate() + 24 * 60 * 60 * 1000,
     displayValue: formatTime(
@@ -73,7 +73,7 @@ Page({
   onConfirm1(e) {
     this.setData({
       status: e.detail.label,
-      statusCode: e.detail.value[0]
+      statusCode: e.detail.value
     });
   },
   _getlocation() {
@@ -119,7 +119,7 @@ Page({
         area: this.data.area,
         statusLabel: this.data.status,
         date: this.data.selectTime,
-        type: this.data.statusCode,
+        type: this.data.statusCode[0],
         openId: app.globalData.openId,
         createDate: getCurrentDate(),
         status: 0

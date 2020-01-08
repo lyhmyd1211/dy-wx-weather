@@ -8,7 +8,7 @@
     <wux-date-picker mode="date" maxDate="{{curDate + 30*24* 60 *60*1000}}" minDate="{{curDate + 24* 60 *60*1000}}" value="{{ selectTime }}" lang="zh_CN" data-index="2" data-mode="date" bind:confirm="onConfirm">
       <wux-cell title="选择预报时间" is-link extra="{{ displayValue }}"></wux-cell>
     </wux-date-picker>
-    <wux-picker options="{{ statusOptions }}" value="{{ statusCode }}" data-index="4" bind:confirm="onConfirm1">
+    <wux-picker options="{{ statusOptions }}" value="{{ statusCode }}" data-index="4" bind:confirm="onConfirm1" cols="1">
       <wux-cell title="选择天气情况分类" is-link extra="{{ status }}"></wux-cell>
     </wux-picker>
     <!-- <wux-cascader controlled="{{true}}" visible="{{ visible}}" value="{{ areaValue }}" title="所在地区" options="{{ options }}" bind:close="onClose"  /> -->
