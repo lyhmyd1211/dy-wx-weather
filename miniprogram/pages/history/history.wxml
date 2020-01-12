@@ -3,28 +3,37 @@
   <view slot="backText">返回</view>
   <view slot="content">我的预报</view>
 </cu-custom>
+<wux-dialog id="wux-dialog-del" />
 <view class="my-main">
+  <!-- <wux-refresher id="wux-refresher" bind:pulling="onPulling" bind:loadmore="onLoadmore" scrollTop="{{scrollTop}}"> -->
   <scroll-view scroll-y="{{true}}" class="card-box">
-    <view class="card" wx:for="{{queryResult}}">
-      <view>
-        <text class="status">预测天气状况:{{item.statusLabel}}</text>
-        <text class="fen" wx:if="{{item.status == 0}}">可得{{item.score}}积分</text>
-        <text class="fen" wx:elif="{{item.status ==1}}">已赢得{{item.score}}积分</text>
-        <text class="fen" wx:elif="{{item.status ==2}}">未获得积分</text>
+    <wux-swipe-action-group>
+      <view class="card-item" wx:for="{{queryResult}}" wx:key="index">
+        <wux-swipe-action autoClose left="{{item.status == 0?left:''}}" right="{{ right }}" bind:click="onClick" data="{{item}}">
+          <view class="card">
+            <view>
+              <text class="status">预测天气状况:{{item.statusLabel}}</text>
+              <text class="fen" wx:if="{{item.status == 0}}">可得{{item.score}}积分</text>
+              <text class="fen" wx:elif="{{item.status ==1}}">已赢得{{item.score}}积分</text>
+              <text class="fen" wx:elif="{{item.status ==2}}">未获得积分</text>
+            </view>
+            <view class="bottom">
+              <view>
+                <view class="time">预测地区:{{item.area}}</view>
+                <view class="time">预测日期:{{item.dateLabel+item.dn}}</view>
+              </view>
+              <view class="result" wx:if="{{item.status == 0}}">
+                <view class="day" wx:if="{{item.distance>0}}">{{item.distance}}天</view>
+                <view class="day" wx:else>20:00时</view>
+                <view>出结果</view>
+              </view>
+              <view class="result1" wx:elif="{{item.status ==1}}">预报成功</view>
+              <view class="result2" wx:elif="{{item.status ==2}}">预报失败</view>
+            </view>
+          </view>
+        </wux-swipe-action>
       </view>
-      <view class="bottom">
-        <view>
-          <view class="time">预测地区:{{item.area}}</view>
-          <view class="time">预测日期:{{item.dateLabel}}</view>
-        </view>
-        <view class="result" wx:if="{{item.status == 0}}">
-          <view class="day" wx:if="{{item.distance>0}}">{{item.distance}}天</view>
-          <view class="day" wx:else>20:00时</view>
-          <view>出结果</view>
-        </view>
-        <view class="result1" wx:elif="{{item.status ==1}}">预报成功</view>
-        <view class="result2" wx:elif="{{item.status ==2}}">预报失败</view>
-      </view>
-    </view>
+    </wux-swipe-action-group>
   </scroll-view>
+  <!-- </wux-refresher> -->
 </view>

@@ -5,6 +5,7 @@
     "wux-date-picker": "../../lib/date-picker/index",
     "wux-cell": "../../lib/cell/index",
     "wux-icon": "../../lib/icon/index",
-    "wux-picker": "../../lib/picker/index"
+    "wux-picker": "../../lib/picker/index",
+    "wux-dialog": "../../lib/dialog/index"
   }
 }

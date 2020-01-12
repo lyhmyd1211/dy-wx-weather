@@ -6,11 +6,9 @@
 <view class="container">
   <!-- 用户 openid -->
   <view class="userinfo">
-    <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{userInfo.avatarUrl||avatarUrl}})"></button>
+    <button class="userinfo-avatar" style="background-image: url({{userInfo.avatarUrl||avatarUrl}})"></button>
     <view>
-      <button open-type="getUserInfo" class="userinfo-nickname" bindgetuserinfo="onGetUserInfo">
-        {{userInfo.name||'未登录'}}
-      </button>
+      <button class="userinfo-nickname" bindtap="login">{{userInfo.name||'登录'}}</button>
     </view>
     <wux-popup closable visible="{{ loginVis }}" title="登录提示" content="你已登录，是否更新登录信息？" bind:close="onClose">
       <button slot="footer" class="popup__button" bindtap="cancelL">取消</button>
@@ -25,4 +23,5 @@
   <view class="userinfo" bindtap="myForcecast">
     <text>我的预报</text>
   </view>
+  <!-- <view bindtap="test">test</view> -->
 </view>

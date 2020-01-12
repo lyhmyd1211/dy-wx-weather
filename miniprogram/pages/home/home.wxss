@@ -1,8 +1,16 @@
 /* miniprogram/pages/home/home.wxss */
 .home-main {
-  height: calc(100vh - 60px);
+  height: calc(100vh - 80px);
   width: 100%;
   position: absolute;
+}
+
+.top {
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  height: 70px;
+  background-image: linear-gradient(#8f0ab9, #9bcaf3);
 }
 
 .box {
@@ -29,6 +37,9 @@
 }
 
 .home-content {
+  width: calc(100% - 40rpx);
+  position: absolute;
+  bottom: 30rpx;
   margin: 0 20rpx;
   font-size: 14pt;
   color: #353535;
@@ -95,6 +106,7 @@
 }
 
 .titles {
+  z-index: 998;
   width: 200rpx;
   position: absolute;
   top: 15%;

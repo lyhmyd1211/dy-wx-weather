@@ -5,7 +5,9 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: {
+    isLogin: false
+  },
   _getlocation() {
     let that = this;
     // 新建百度地图对象
@@ -103,7 +105,9 @@ Page({
       complete: function(res) {}
     });
   },
-
+  again() {
+    this._getlocation();
+  },
   begin() {
     wx.navigateTo({
       url: '../beginForceCast/begin'
@@ -133,38 +137,47 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
+  login() {
+    wx.navigateTo({
+      url: '../login/login'
+    });
+  },
   onShow: function() {
-    const db = wx.cloud.database();
-    db.collection('user')
-      .where({
-        openId: wx.getStorageSync('openId') || -1
-      })
-      .get({
-        success: res => {
-          console.log('[数据库] [查询记录] 成功: ', res);
-          if (res.data.length == 0) {
-            wx.showToast({
-              icon: 'none',
-              title: '当前未登录'
-            });
-            wx.navigateTo({
-              url: '../login/login'
-            });
-            wx.clearStorage();
-          }
-        },
-        fail: err => {
-          wx.showToast({
-            icon: 'none',
-            title: '当前未登录'
-          });
-          wx.navigateTo({
-            url: '../login/login'
-          });
-          wx.clearStorage();
-          console.error('[数据库] [查询记录] 失败：', err);
-        }
-      });
+    console.log('ssswww', wx.getStorageSync('openId'));
+    this.setData({
+      isLogin: !!wx.getStorageSync('openId')
+    });
+    // const db = wx.cloud.database();
+    // db.collection('user')
+    //   .where({
+    //     openId: wx.getStorageSync('openId') || -1
+    //   })
+    //   .get({
+    //     success: res => {
+    //       console.log('[数据库] [查询记录] 成功: ', res);
+    //       if (res.data.length == 0) {
+    //         wx.showToast({
+    //           icon: 'none',
+    //           title: '当前未登录'
+    //         });
+    //         wx.navigateTo({
+    //           url: '../login/login'
+    //         });
+    //         wx.clearStorage();
+    //       }
+    //     },
+    //     fail: err => {
+    //       wx.showToast({
+    //         icon: 'none',
+    //         title: '当前未登录'
+    //       });
+    //       wx.navigateTo({
+    //         url: '../login/login'
+    //       });
+    //       wx.clearStorage();
+    //       console.error('[数据库] [查询记录] 失败：', err);
+    //     }
+    //   });
   },
 
   /**

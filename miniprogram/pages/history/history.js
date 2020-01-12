@@ -1,21 +1,84 @@
 // miniprogram/pages/history/history.js
 const app = getApp();
+const db = wx.cloud.database();
 import { getCurrentDate, formatTime } from '../../utils/util';
+import { $wuxDialog } from '../../lib/index';
+
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    scrollTop: 0,
     queryResult: [],
     date: '',
-    distance: ''
+    distance: '',
+    right: [
+      {
+        text: '删除',
+        style: 'background-color: #e64340; color: white'
+      }
+    ],
+    left: [
+      {
+        text: '更改',
+        style: 'background-color: #108ee9; color: white'
+      }
+    ]
   },
 
+  onClick(e) {
+    console.log(e.detail);
+    let that = this;
+    if (e.detail.type == 'right') {
+      $wuxDialog('#wux-dialog-del').confirm({
+        resetOnClose: true,
+        closable: true,
+        title: '删除提示',
+        content: '删除后将不会获得积分奖励，确定要删除此条预报？',
+        onConfirm(r) {
+          db.collection('forcecast')
+            .doc(e.detail.data._id)
+            .remove()
+            .then(res => {
+              wx.showToast({
+                icon: 'none',
+                title: '删除成功'
+              });
+              that.gethistory();
+            });
+        },
+        onCancel(e) {}
+      });
+    } else if (e.detail.type == 'left') {
+      if (e.detail.data.updateCount == 3) {
+        $wuxDialog('#wux-dialog-del').alert({
+          resetOnClose: true,
+          title: '提示',
+          content: '已到达修改上限！每条预报信息最多修改三次'
+        });
+      } else if (e.detail.data.status == 0) {
+        $wuxDialog('#wux-dialog-del').confirm({
+          resetOnClose: true,
+          closable: true,
+          title: '更改提示',
+          content: '每条预报信息最多修改三次，确定去修改？',
+          onConfirm(r) {
+            wx.navigateTo({
+              url: `../beginForceCast/begin?itemData=${JSON.stringify(
+                e.detail.data
+              )}`
+            });
+          },
+          onCancel(e) {}
+        });
+      }
+    }
+  },
   gethistory() {
-    const db = wx.cloud.database();
     db.collection('forcecast')
       .where({
-        openId: app.globalData.openid
+        openId: wx.getStorageSync('openId') || app.globalData.openId
       })
       .orderBy('date', 'desc')
       .get({

@@ -23,7 +23,7 @@ function initChart(canvas, width, height) {
             borderWidth: 2,
             borderColor: '#eee',
             shadowBlur: 20,
-            shadowColor: 'rgba(255, 0, 0, 1)'
+            shadowColor: '#9bcaf3'
           }
         },
         label: {
@@ -57,6 +57,7 @@ function initChart(canvas, width, height) {
 Page({
   onShareAppMessage: function(res) {
     return {
+      hide: false,
       visible: false,
       title: 'ECharts',
       path: '/pages/index/index',
@@ -65,6 +66,7 @@ Page({
     };
   },
   data: {
+    isLogin: false,
     defaultAva: '../../images/user-unlogin.png',
     list: [],
     score: '0',
@@ -73,13 +75,29 @@ Page({
     }
   },
   showguize() {
-    this.setData({
-      visible: true
+    this.setData(
+      {
+        hide: true
+      },
+      () => {
+        setTimeout(() => {
+          this.setData({
+            visible: true
+          });
+        }, 100);
+      }
+    );
+  },
+
+  login() {
+    wx.navigateTo({
+      url: '../login/login'
     });
   },
   onClose() {
     this.setData({
-      visible: false
+      visible: false,
+      hide: false
     });
   },
   queryScore(call) {
@@ -138,37 +156,41 @@ Page({
       });
   },
   onShow: function(options) {
-    const db = wx.cloud.database();
-    db.collection('user')
-      .where({
-        openId: wx.getStorageSync('openId') || -1
-      })
-      .get({
-        success: res => {
-          console.log('[数据库] [查询记录] 成功: ', res);
-          if (res.data.length == 0) {
-            wx.showToast({
-              icon: 'none',
-              title: '当前未登录'
-            });
-            wx.navigateTo({
-              url: '../login/login'
-            });
-            wx.clearStorage();
-          }
-        },
-        fail: err => {
-          wx.showToast({
-            icon: 'none',
-            title: '当前未登录'
-          });
-          wx.navigateTo({
-            url: '../login/login'
-          });
-          wx.clearStorage();
-          console.error('[数据库] [查询记录] 失败：', err);
-        }
-      });
+    console.log('home', wx.getStorageSync('openId'));
+    this.setData({
+      isLogin: !!wx.getStorageSync('openId')
+    });
+    // const db = wx.cloud.database();
+    // db.collection('user')
+    //   .where({
+    //     openId: wx.getStorageSync('openId') || -1
+    //   })
+    //   .get({
+    //     success: res => {
+    //       console.log('[数据库] [查询记录] 成功: ', res);
+    //       if (res.data.length == 0) {
+    //         wx.showToast({
+    //           icon: 'none',
+    //           title: '当前未登录'
+    //         });
+    //         wx.navigateTo({
+    //           url: '../login/login'
+    //         });
+    //         wx.clearStorage();
+    //       }
+    //     },
+    //     fail: err => {
+    //       wx.showToast({
+    //         icon: 'none',
+    //         title: '当前未登录'
+    //       });
+    //       wx.navigateTo({
+    //         url: '../login/login'
+    //       });
+    //       wx.clearStorage();
+    //       console.error('[数据库] [查询记录] 失败：', err);
+    //     }
+    //   });
     this.queryRank();
     this.queryScore();
     // if (this.data.chart) {

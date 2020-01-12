@@ -1,3 +1,8 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "wux-swipe-action-group": "../../lib/swipe-action-group/index",
+    "wux-swipe-action": "../../lib/swipe-action/index",
+    "wux-dialog": "../../lib/dialog/index",
+    "wux-refresher": "../../lib/refresher/index"
+  }
 }

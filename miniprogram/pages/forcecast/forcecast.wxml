@@ -6,7 +6,7 @@
   <view class="content">
     <view class="cur-box" wx:if="{{weatherData}}">
       <!-- <view class="location1">{{location1}}</view> -->
-      <view class="location2">
+      <view class="location2" bindtap="again">
         <wux-icon type="pin" />
         {{location2||'无法定位，点击重试'}}
       </view>
@@ -26,8 +26,11 @@
       </view>
     </view>
     <view class="bottom-box">
-      <button class="my-box btn-box" bindtap="begin">开始预报</button>
-      <button class="history-box btn-box" bindtap="history">预报历史</button>
+      <block wx:if="{{isLogin}}">
+        <button class="my-box btn-box" bindtap="begin">开始预报</button>
+        <button class="history-box btn-box" bindtap="history">预报历史</button>
+      </block>
+      <button class="my-box btn-box" bindtap="login" wx:else>登录</button>
     </view>
   </view>
 </view>

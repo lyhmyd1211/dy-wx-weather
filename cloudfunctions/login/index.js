@@ -9,7 +9,7 @@ exports.main = async () => {
     const allUser = (await userCollection.get()).data;
     const [userInfo] = allUser.filter(v => v.openId === OPENID);
     console.log('查到的userInfo', userInfo);
-    let name, avatarUrl, gender;
+    let name, avatarUrl, score;
     // 无记录，加记录
     if (!userInfo) {
       await userCollection.add({

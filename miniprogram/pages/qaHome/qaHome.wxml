@@ -5,10 +5,13 @@
 <view class="qa-home-main">
   <view class="qa-content">
     <view class="top">
-      <view class="userinfo-avatar" style="background-image: url({{userInfo.avatarUrl||info.avatarUrl||avataUrl}})"></view>
+      <view class="userinfo-avatar" style="background-image: url({{userInfo.avatarUrl||avatarUrl}})"></view>
       <view class="fen">
-        <image src="cloud://yun-weather-17ac58.7975-yun-weather-17ac58-1301058436/images/gd1.png" />
-        <text style="margin-left:5px">{{info.score}}分</text>
+        <block wx:if="{{isLogin}}">
+          <image src="cloud://dy-weather-ch7rk.6479-dy-weather-ch7rk-1301104022/image/gd1.png" />
+          <text style="margin-left:5px">{{info.score}}分</text>
+        </block>
+        <view wx:else bindtap="login">登录</view>
       </view>
       <!-- <view class="guize" bindtap="showguize">规则</view> -->
     </view>

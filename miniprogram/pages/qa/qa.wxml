@@ -5,17 +5,28 @@
 <view class="qa-main">
   <!-- <view class="time">{{time}}</view> -->
   <view class="page__bd page__bd_spacing circle-box">
-    <wux-circle size="50" percent="{{percent}}" color="{{percent<90?'#33cd5f':'#e64340'}}" sAngle="270" wx:if="{{!isnext}}">
-      {{time}}
+    <wux-circle size="50" percent="{{percent}}" color="{{percent<95?'#33cd5f':'#e64340'}}" sAngle="270" wx:if="{{!isnext}}">
+      <view style="color:#fff">{{time}}</view>
     </wux-circle>
   </view>
   <wux-landscape visible="{{ finish }}" closable="{{false}}">
     <view class="finish-box">
-      <view>本次答题获取分数:{{score}}分</view>
-      <view wx:if="{{score}}">再接再厉，继续加油！</view>
-      <view wx:else>别灰心，下次一定能拿分！</view>
-      <view>
+      <block wx:if="{{islimit}}">
+        <view>本次答对{{score/10}}题</view>
+        <view>今天竞答可获积分已达上限不再增加，但任可继续练习哦。</view>
+      </block>
+      <block wx:else>
+        <view>本次答对{{score/10}}题，获取分数:{{score}}分</view>
+        <view wx:if="{{score}}">再接再厉，继续加油！</view>
+        <view wx:else>别灰心，下次一定能拿分！</view>
+        <view wx:if="{{!isLogin}}">登录后可记录积分，是否登录</view>
+      </block>
+      <view class="btn" wx:if="{{isLogin}}">
         <button bindtap="back">结束答题</button>
+      </view>
+      <view class="btn" wx:else>
+        <button bindtap="login">立即登录</button>
+        <text>稍后再说</text>
       </view>
     </view>
   </wux-landscape>
@@ -24,14 +35,17 @@
     <button slot="footer" bindtap="goback">不需要</button>
   </wux-popup> -->
   <view style="height:1rpx"></view>
-  <view class="question-box">
+  <view class="{{'question-box '}}">
     <view style="height:1rpx"></view>
-    <scroll-view scroll-y="true" style="height:40%" class="text-q">{{curData.q}}</scroll-view>
-    <scroll-view scroll-y="true" style="height:45%" class="a-box">
-      <view class="{{'text-a '+(isChoose&&item.aId==curData.correct?'correct':isChoose&&curChoose!==curData.correct&&item.aId ==curChoose?'error':'')}}" wx:for="{{curData.a}}" data-id="{{item.aId}}" wx:key="index" bindtap="choose">
-        <view>{{aTitle[index%5]+item.atext}}</view>
+    <scroll-view scroll-y="true" style="height:85%" class="{{'text-q '+(isTer?'red-bg':'')}}">
+      <view style="height:1rpx"></view>
+      <view class="q-box">{{curData.q}}</view>
+      <view class="a-box">
+        <view class="{{'text-a '+((isChoose&&item.aId==curData.correct)||(timeOver&&item.aId==curData.correct)?'correct':isChoose&&curChoose!==curData.correct&&item.aId ==curChoose?'error':timeOver&&curChoose!==curData.correct?'error':'')}}" wx:for="{{curData.a}}" data-id="{{item.aId}}" wx:key="index" bindtap="choose">
+          <view>{{aTitle[index%5]+item.atext}}</view>
+        </view>
       </view>
     </scroll-view>
   </view>
-  <view style="text-align:center;margin-top:10px">第{{current+1}}/{{list.length}}题</view>
+  <view style="text-align:center;margin-top:10px;color:#fff">第{{current+1}}/{{list.length}}题</view>
 </view>

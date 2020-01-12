@@ -1,15 +1,19 @@
 <!-- miniprogram/pages/home/home.wxml -->
-<cu-custom bgColor="bg-gradual-pink" isBack="{{false}}">
+<cu-custom bgColor="bg-opacity" isBack="{{false}}">
   <!-- <view slot="backText">返回</view> -->
   <view slot="content">首页</view>
 </cu-custom>
+<view class="top"></view>
 <view class="home-main">
   <view class="guize" bindtap="showguize">规则</view>
   <view class="titles">
-    <view>积分数</view>
-    <view>{{score}}</view>
+    <block wx:if="{{isLogin}}">
+      <view>积分数</view>
+      <view>{{score}}</view>
+    </block>
+    <view wx:else bindtap="login">登录</view>
   </view>
-  <view class="box">
+  <view class="box" wx:if="{{!hide}}">
     <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
   </view>
   <view class="home-content" style="height: 55%">
@@ -25,8 +29,8 @@
       </view>
     </scroll-view>
   </view>
-  <wux-landscape visible="{{ visible }}" bind:close="onClose">
-    <view style="color:#fff;text-align:left">
+  <wux-popup visible="{{ visible }}" bind:close="onClose" zIndex="9999" closable>
+    <view style="color:#333;text-align:left">
       <view>（1）活动参与者先通过手机微信关注“都匀气象“微信公众号，打开手机定位，进入活动平台成功验证登录信息后参与活动。</view>
       <view>（2）本活动共分为气象知识竞答和全民预报两个板块。</view>
       <view>（3）气象知识竞答:每次从题库中随机抽取10道单选题进行作答，每道题限时20秒，答对1题积10分，答错不扣分。</view>
@@ -36,5 +40,5 @@
       <view>（5）系统将公布参与者个人积分累积情况及排名。</view>
       <view>（6）本次活动最终解释权归主办方所有。</view>
     </view>
-  </wux-landscape>
+  </wux-popup>
 </view>

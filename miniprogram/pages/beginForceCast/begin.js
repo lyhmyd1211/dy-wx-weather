@@ -2,11 +2,13 @@
 const bmap = require('../../utils/libs/bmap-wx.min.js');
 const app = getApp();
 import { getCurrentDate, formatTime } from '../../utils/util';
+import { $wuxDialog } from '../../lib/index';
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    isEdit: false,
     location: '',
     area: '',
     status: '晴',
@@ -101,7 +103,7 @@ Page({
   onConfirm2(e) {
     this.setData({
       dn: e.detail.label,
-      dnCode: e.detail.value
+      dnCode: e.detail.value[0]
     });
   },
   _getlocation() {
@@ -136,43 +138,110 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log('sss', options);
+    if (options.itemData) {
+      let val = JSON.parse(options.itemData);
+      this.setData({
+        isEdit: true,
+        location: val.location,
+        area: val.area,
+        selectTime: val.date,
+        statusCode: [val.type],
+        status: val.statusLabel,
+        dn: val.dn,
+        dnCode: val.dnCode,
+        score: val.score,
+        _id: val._id,
+        displayValue: val.dateLabel
+      });
+    }
     this._getlocation();
   },
 
   onSubmit() {
     const db = wx.cloud.database();
-    db.collection('forcecast').add({
-      data: {
-        location: this.data.location,
-        area: this.data.area,
-        statusLabel: this.data.status,
+    const _ = db.command;
+    let param = {
+      location: this.data.location,
+      area: this.data.area,
+      statusLabel: this.data.status,
+      date: this.data.selectTime,
+      type: this.data.statusCode[0],
+      openId: wx.getStorageSync('openId') || app.globalData.openId,
+      createDate: getCurrentDate(),
+      status: 0,
+      score: this.data.score,
+      dn: this.data.dn,
+      dnCode: this.data.dnCode,
+      updateCount: 0
+    };
+    db.collection('forcecast')
+      .where({
+        openId: wx.getStorageSync('openId'),
         date: this.data.selectTime,
-        type: this.data.statusCode[0],
-        openId: app.globalData.openId,
-        createDate: getCurrentDate(),
-        status: 0,
-        score: this.data.score,
-        dn: this.data.dn,
         dnCode: this.data.dnCode
-      },
-      success: res => {
-        console.log('[数据库] [新增] 成功: ', res);
-        wx.showToast({
-          icon: 'none',
-          title: '提交成功'
-        });
-        wx.navigateTo({
-          url: '../history/history'
-        });
-      },
-      fail: err => {
+      })
+      .get()
+      .then(res => {
+        if (res.data.length > 0) {
+          $wuxDialog('#wux-dialog--edit').alert({
+            resetOnClose: true,
+            title: '重复提示',
+            content: `${this.data.displayValue}${this.data.dn}的预报信息已存在!`
+          });
+        } else if (this.data.isEdit) {
+          db.collection('forcecast')
+            .doc(this.data._id)
+            .update({
+              data: { ...param, updateCount: _.inc(1) },
+              success: res => {
+                console.log('[数据库] [修改] 成功: ', res);
+                wx.showToast({
+                  icon: 'none',
+                  title: '修改信息成功'
+                });
+                wx.switchTab({
+                  url: '../forcecast/forcecast'
+                });
+              },
+              fail: err => {
+                wx.showToast({
+                  icon: 'none',
+                  title: '提交失败，请检查网络'
+                });
+                console.error('[数据库] [查询记录] 失败：', err);
+              }
+            });
+        } else {
+          db.collection('forcecast').add({
+            data: param,
+            success: res => {
+              console.log('[数据库] [新增] 成功: ', res);
+              wx.showToast({
+                icon: 'none',
+                title: '提交成功'
+              });
+              wx.navigateTo({
+                url: '../history/history'
+              });
+            },
+            fail: err => {
+              wx.showToast({
+                icon: 'none',
+                title: '提交失败，请检查网络'
+              });
+              console.error('[数据库] [查询记录] 失败：', err);
+            }
+          });
+        }
+      })
+      .catch(err => {
         wx.showToast({
           icon: 'none',
           title: '提交失败，请检查网络'
         });
         console.error('[数据库] [查询记录] 失败：', err);
-      }
-    });
+      });
   },
 
   /**

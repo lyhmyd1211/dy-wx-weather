@@ -1,6 +1,5 @@
 // miniprogram/pages/login/login.js
 const app = getApp();
-import { $wuxLoading } from '../../lib/index';
 Page({
   /**
    * 页面的初始数据
@@ -8,7 +7,9 @@ Page({
   data: {
     loading: true
   },
-
+  goback() {
+    wx.navigateBack();
+  },
   onGetUserInfo: function(e) {
     wx.cloud.callFunction({
       name: 'login',
@@ -16,10 +17,7 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res);
         app.globalData.openId = res.result.openId;
-        wx.setStorage({
-          key: 'openId',
-          data: res.result.openId
-        });
+
         if (!res.result.name) {
           wx.getUserInfo({
             success: infoRes => {
@@ -40,12 +38,11 @@ Page({
                     key: 'avatarUrl',
                     data: updateRes.result.avatarUrl
                   });
-                  wx.switchTab({
-                    url: '/pages/home/home',
-                    success: result => {},
-                    fail: () => {},
-                    complete: () => {}
+                  wx.setStorage({
+                    key: 'openId',
+                    data: res.result.openId
                   });
+                  wx.navigateBack();
                 },
                 fail: err => {
                   console.error('[云函数] [login] 调用失败', err);
@@ -65,12 +62,11 @@ Page({
             key: 'avatarUrl',
             data: res.result.avatarUrl
           });
-          wx.switchTab({
-            url: '/pages/home/home',
-            success: result => {},
-            fail: () => {},
-            complete: () => {}
+          wx.setStorage({
+            key: 'openId',
+            data: res.result.openId
           });
+          wx.navigateBack();
         }
       },
       fail: err => {

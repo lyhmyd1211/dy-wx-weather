@@ -1,7 +1,9 @@
 <!-- miniprogram/pages/beginForceCast/begin.wxml -->
 <cu-custom bgColor="bg-opacity" isBack="{{true}}">
   <view slot="backText">返回</view>
+  <view slot='content'>{{isEdit?'预报信息修改':'全民预报'}}</view>
 </cu-custom>
+<wux-dialog id="wux-dialog--edit" />
 <view class="forc-game">
   <view class="box">
     <wux-cell title="预报地区" extra="{{ area }}"></wux-cell>
@@ -14,12 +16,12 @@
     <wux-picker options="{{ dnOptions }}" value="{{ dnCode }}" data-index="3" bind:confirm="onConfirm2" cols="1">
       <wux-cell title="选择白昼" is-link extra="{{ dn }}"></wux-cell>
     </wux-picker>
-    <image mode='aspectFit' src="cloud://yun-weather-17ac58.7975-yun-weather-17ac58-1301058436/images/yujiaxue.gif" wx:if="{{statusCode=='404'}}" />
-    <image mode='aspectFit' src="cloud://yun-weather-17ac58.7975-yun-weather-17ac58-1301058436/images/duoyun.jpg" wx:if="{{statusCode=='101'}}" />
-    <image mode='aspectFit' src="cloud://yun-weather-17ac58.7975-yun-weather-17ac58-1301058436/images/qing.jpg" wx:if="{{statusCode=='100'}}" />
-    <image mode='aspectFit' src="cloud://yun-weather-17ac58.7975-yun-weather-17ac58-1301058436/images/xue.jpg" wx:if="{{statusCode=='499'}}" />
-    <image mode='aspectFit' src="cloud://yun-weather-17ac58.7975-yun-weather-17ac58-1301058436/images/yin.jpg" wx:if="{{statusCode=='104'}}" />
-    <image mode='aspectFit' src="cloud://yun-weather-17ac58.7975-yun-weather-17ac58-1301058436/images/yu.jpg" wx:if="{{statusCode=='399'}}" />
+    <image mode='aspectFit' src="cloud://dy-weather-ch7rk.6479-dy-weather-ch7rk-1301104022/image/yujiaxue.gif" wx:if="{{statusCode=='404'}}" />
+    <image mode='aspectFit' src="cloud://dy-weather-ch7rk.6479-dy-weather-ch7rk-1301104022/image/3b9408f844cab5b7cfe43ef932320716.jpg" wx:if="{{statusCode=='101'}}" />
+    <image mode='aspectFit' src="cloud://dy-weather-ch7rk.6479-dy-weather-ch7rk-1301104022/image/qing.jpg" wx:if="{{statusCode=='100'}}" />
+    <image mode='aspectFit' src="cloud://dy-weather-ch7rk.6479-dy-weather-ch7rk-1301104022/image/xue.jpg" wx:if="{{statusCode=='499'}}" />
+    <image mode='aspectFit' src="cloud://dy-weather-ch7rk.6479-dy-weather-ch7rk-1301104022/image/yin.jpg" wx:if="{{statusCode=='104'}}" />
+    <image mode='aspectFit' src="cloud://dy-weather-ch7rk.6479-dy-weather-ch7rk-1301104022/image/yu.jpg" wx:if="{{statusCode=='399'}}" />
     <view></view>
     <view class="bottom-fen">
       <text>预报正确得分：</text>
@@ -29,6 +31,6 @@
   </view>
   <view class="box-bg"></view>
   <view class="submit">
-    <button bindtap="onSubmit">提交</button>
+    <button bindtap="onSubmit">{{isEdit?'确认修改':'提交'}}</button>
   </view>
 </view>

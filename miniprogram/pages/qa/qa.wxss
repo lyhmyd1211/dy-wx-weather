@@ -55,24 +55,60 @@
 
 }
 
-.text-q {
-  font-size: 15pt;
+.btn {
+  margin-top: 20px;
+}
+
+
+.finish-box button {
+  background-color: #09bb07;
   color: #fff;
-  text-align: center;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.refuse {
+  color: #09bb07;
+  background-color: #eee;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.text-q {
+
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+
   margin: 100rpx 20rpx 10rpx 20rpx;
-  height: 40%;
   width: 94%;
+}
+
+.q-box {
+  font-size: 14pt;
+  color: #fff;
+  text-align: left;
+  margin-top: 10px;
+  text-indent: 28pt;
 }
 
 .a-box {
   /* height: 3%;
   width: 94%; */
+  margin-top: 45px;
 }
 
 .text-a {
-  font-size: 14pt;
+  text-indent: 0;
+  font-size: 12pt;
   color: #fff;
-  text-align: center;
+  text-align: left;
   margin: 50rpx auto;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
   padding: 5px 15px;
@@ -93,4 +129,10 @@
 .error {
   background-color: #e64340;
   color: #fff;
+}
+
+.red-bg {
+  /* border: 1px solid #e64340; */
+  border-top: 1px solid #e64340;
+  border-bottom: 1px solid #e64340;
 }

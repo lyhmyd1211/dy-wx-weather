@@ -2,11 +2,15 @@
 <view class="login-main">
   <wux-spin nested spinning="{{ loading }}" tip="拼命加载中。。。">
     <block wx:if="{{!loading}}">
-      <view class="tip">您暂未获取微信授权，将无法正常使用小程序的功能~请点击“授权登录”按钮，打开头像、昵称等信息的授权。</view>
-      <button class="login-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">
-        授权登录
-      </button>
+      <!-- <view class="tip">您暂未获取微信授权，将无法正常使用小程序的功能~请点击“授权登录”按钮，打开头像、昵称等信息的授权。</view> -->
+      <view class="tip">您暂未登录，将无法正常使用记录积分以及其他需要登录的功能~请点击“立即登录”按钮进行登录</view>
+      <view class="btn">
+        <button class="refuse-btn" bindtap="goback">暂不登录</button>
+        <button class="login-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">
+          立即登录
+        </button>
+      </view>
     </block>
-    <view wx:else class="tip" style="text-align: center;margin-top: 100px;">精彩即将到来。。</view>
+    <!-- <view wx:else class="tip" style="text-align: center;margin-top: 100px;">精彩即将到来。。</view> -->
   </wux-spin>
 </view>
